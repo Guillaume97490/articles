@@ -7,6 +7,7 @@ mongoose.connect(dbUrl, { useNewUrlParser: true, useFindAndModify: false } , (er
 let messageSchema = mongoose.Schema({
     titre : {
         type: String,
+        maxlength: 10,
         required: true},
     description : {
         type: String,

@@ -8,6 +8,8 @@ module.exports = (app) => {
 
   app.get('/articles', article.list);
 
+  app.get('/article/:id', article.show)
+
   app.get('/ajouter', article.displayAddForm);
 
   app.post('/article', article.add);
