@@ -1,0 +1,22 @@
+<% include ../templates/head.ejs %>
+<div class="container">
+
+<form id="formArticle" class="mt-5" action="/article<% if(locals.articleEdit) { %>/<%=articleEdit.id%><% } %>" method="POST" encType="multipart/form-data">
+  <input name="titre" <% if(locals.articleEdit) { %>data-update-id="<%=articleEdit.id%><% } %>" id="titre" value="<% if(locals.articleEdit) { %><%=articleEdit.titre%><% } %>" aria-label="titre" class="form-control" minlength="3" maxlength="10" required placeholder="Titre de l'article">
+  <input name="description" id="description" value="<% if(locals.articleEdit) { %><%=articleEdit.description%><% } %>" aria-label="description" class="form-control" minlength="3" required placeholder="Description de l'article">
+  
+  <input class="form-control-file" name="image" id="photo" type="file" accept="image/*">
+
+
+  <button data-action-btn id="send" type="submit" class="btn">
+    <% if(locals.articleEdit) { %>
+        <span class="submit-text btn btn-success">Modifier</span>
+    <% } else { %>
+        <span class="submit-text btn btn-success">Ajouter</span>
+    <% } %>
+  </button>
+</form>
+
+
+</div>
+<% include ../templates/footer.ejs %>
