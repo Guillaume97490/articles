@@ -10,6 +10,16 @@ const fileUpload = require('express-fileupload');
 const io = require('socket.io').listen(server);
 global.io = io;
 
+io.on('connection', (socket) => {
+    console.log( 'a user is connected, total : ' + io.engine.clientsCount);
+    io.emit('usersNumber',io.engine.clientsCount);
+
+    socket.on('disconnecting', (reason) => {
+    console.log('a user is disconnecting (' + reason + ') total : ' + io.engine.clientsCount);
+    io.emit('usersNumber',io.engine.clientsCount);
+  });
+});
+
 app.use(fileUpload());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(compression());

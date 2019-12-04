@@ -3,19 +3,25 @@
 
   <section>
 
-    <h1><%= article.titre %></h1>
+    <h1 class="text-center"><%= article.titre %></h1>
     
+    <div class="text-center">
+
     <% if(article.image) { %>
       <img class="img-full" src="/uploads/<%= article.image %>" alt="">
     <% } else { %> 
       <img class="img-full" src="/uploads/no-image.png" alt="">
     <% } %>
-
-    <p><%= article.description %></p>
+    </div>
+    
+    <div class="">
+      <p><%= article.description %></p>
+    </div>
+    
 
   </section>
 
-  <a href="/article/<%= article.id %>/edit" class="btn btn-warning"><span><i class="far fa-edit"></i></span> <span class="d-none d-md-inline-block">Editer</span></a>
+  <a href="/article/<%= article.id %>/edit" class="btn btn-warning"><span><i class="far fa-edit"></i></span> <span class="">Editer l'article</span></a>
 
 </div>
 <% include ../templates/footer.ejs %>

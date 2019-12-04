@@ -1,15 +1,30 @@
 let socket = io();
 socket.on('article', addArticles);
-socket.on('delArt', removeArticle)
+socket.on('delArt', removeArticle);
+socket.on('updArt', changeArticle);
 
 
 $(() => {
+  // $('#articles').on('click',' [data-art-id]'(()=>{
+  //   console.log('e')
+  //   let articleId = $('[data-art-id]').data('artId');
+  //   location.assign(`/article/${articleId}`)
+  // }) 
   getArticles();
 });
 
 updateArticle = (updArt)=> {
   $.post(`/article/${updArt.id}`,updArt).done(redirect());
 }
+
+function changeArticle(updArt) {
+  console.log(updArt);
+  $(`[data-art-id='${updArt.id}'] h5 span`).text(updArt.titre);
+  if(updArt.image) {
+    console.log('src',`uploads/${updArt.image}`);
+    $(`[data-art-id='${updArt.id}'] img`).attr('src',`uploads/${updArt.image}`);
+  }
+};
 
 function getArticles(){
   $.get(`/articles`, (data) => data.forEach(addArticles));
@@ -18,7 +33,7 @@ function getArticles(){
 function addArticles(article) {
 
   $("#articles").prepend(`
-    <div data-art-id="${article._id}" class="card mx-3 mx-md-0 mb-3 mb-md-0  col-md-6 col-lg-4 col-xl-3 p-0">
+    <div data-art-id="${article._id}" class="card mx-3 mx-md-0 mb-3 mb-md-0 col-md-6 col-lg-4 col-xl-3 p-0">
     ${(()=>{
       if (article.image) {
         return `<img src="uploads/${article.image}" class="card-img-top" alt="${article.titre}">`

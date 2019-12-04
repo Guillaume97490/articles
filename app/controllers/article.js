@@ -18,7 +18,7 @@ exports.displayEditForm = (req,res)=> {
     if(err)
       return res.status(500)
     res.render('article/form.ejs', {
-      title: 'Nouvel article',
+      title: article.titre + ' - Edition',
       articleEdit: article
     });
   });
@@ -46,6 +46,7 @@ exports.add = (req, res) => {
       if(err)
         return res.status(500).json({error: 'Une erreur est survenue'});
       req.body._id = article._id;
+      req.body.image = params.image;
       global.io.emit('article', req.body);
       res.redirect('/');
     });
@@ -83,7 +84,7 @@ exports.delete = (req,res) => {
 };
 
 exports.update = (req,res)=> {
-  // console.log(req.body)
+  console.log(req.body)
   let params = {
     titre: validator.escape(req.body.titre).trim(),
     description: validator.escape(req.body.description).trim(),
@@ -104,24 +105,25 @@ exports.update = (req,res)=> {
         titre: params.titre,
         description: params.description,
         image: params.image,
-      },(err)=>{
+      },(err, article)=>{
         if (err)
           return res.status(500).json({error: 'Une erreur est survenue'});
-        global.io.emit('updMsg', req.body);
+        req.body._id = article._id;
+        req.body.image = params.image;
+        global.io.emit('updArt', req.body);
         res.redirect('/');
       });
     });
   }
   else{
-    console.log(params)
     Article.findByIdAndUpdate(req.params.id, {
       titre: params.titre,
       description: params.description,
-    },(err)=>{
-      console.log(req.params.id)
+    },(err, article)=>{
       if (err)
         return res.status(500).json({error: 'Une erreur est survenue'});
-      global.io.emit('updMsg', req.body);
+      req.body.id = article._id;
+      global.io.emit('updArt', req.body);
       res.redirect('/');
     });
   };

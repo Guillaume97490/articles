@@ -26,6 +26,17 @@
     <div class="form-group">
       <label for="image">Image de l'article : (format accepté, jpg,png)</label>
       <input class="form-control-file" name="image" id="image" type="file" accept="image/*">
+
+      <div class="mt-2">
+
+        <% if(locals.articleEdit) { %>
+          <% if(articleEdit.image) {%>
+            <img class="img-fluid" src="/uploads/<%= articleEdit.image %>" alt="">
+            <% } else { %>
+              <img class="img-fluid" src="/uploads/no-image.png" alt="">
+          <% } %>
+        <% } %>
+      </div>
     </div>
   
     <button data-action-btn id="send" type="submit" class="btn">
