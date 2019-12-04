@@ -5,11 +5,11 @@ socket.on('updArt', changeArticle);
 
 
 $(() => {
-  // $('#articles').on('click',' [data-art-id]'(()=>{
-  //   console.log('e')
-  //   let articleId = $('[data-art-id]').data('artId');
-  //   location.assign(`/article/${articleId}`)
-  // }) 
+  $(document).on('click', '[data-art-id]', function(){
+    let id = $(this).data('artId');
+    window.location.assign(`/article/${id}`);
+  });
+
   getArticles();
 });
 
@@ -18,12 +18,10 @@ updateArticle = (updArt)=> {
 }
 
 function changeArticle(updArt) {
-  console.log(updArt);
-  $(`[data-art-id='${updArt.id}'] h5 span`).text(updArt.titre);
+  $(`[data-art-id='${updArt._id}'] h5 span`).text(updArt.titre);
   if(updArt.image) {
-    console.log('src',`uploads/${updArt.image}`);
-    $(`[data-art-id='${updArt.id}'] img`).attr('src',`uploads/${updArt.image}`);
-  }
+    $(`[data-art-id='${updArt._id}'] img`).attr('src',`uploads/${updArt.image}`);
+  };
 };
 
 function getArticles(){

@@ -11,6 +11,14 @@ body {
 [data-art-id]{
   border: 2px solid white;
   box-shadow: 0 0 0 1px inset rgba(0,0,0,.19);
+  cursor: pointer;
+  transform: scale(1.0);
+  transition: transform .5s;
+}
+[data-art-id]:hover{
+  z-index: 1;
+  transform: scale(1.1);
+  transition: transform .2s;
 }
 
 .card-img-top{
